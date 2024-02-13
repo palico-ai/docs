@@ -1,0 +1,117 @@
+---
+sidebar_label: Getting Started
+sidebar_position: 1
+---
+
+import { SimpleCard } from "@site/src/components/card/index.tsx";
+import NextStepsCTA from "@site/src/components/cta/next_steps.tsx";
+import { Grid } from "@mui/material";
+import {
+  CREATE_COPILOT_GUIDE,
+  CREATE_TRANSLATOR_GUIDE,
+} from "@site/src/constants/routes.ts";
+
+# Getting Started
+
+## Setup Server-Sided Agent
+
+### Create a new Project
+
+```bash
+npx palico init <project-name>
+```
+
+<details>
+<summary>Expected Directory Structure</summary>
+
+This will create a new directory with the name `<project-name>` and initialize a new Palico project for your.
+The project will have the following directory structure:
+
+```
+<project-name>
+├── src
+│   ├── index.ts
+|   ├── prompt_builder.ts
+|   |── toolset.ts
+├── .gitignore
+├── package.json
+├── palico.json
+|── tsconfig.json
+└── README.md
+```
+
+</details>
+
+### Install NPM Dependencies
+
+```bash
+cd <project-name>
+npm install
+```
+
+### Setting OpenAI Configuration
+
+Create a `.env` file in the root of your project and add the following:
+
+```
+OPENAI_API_KEY=<your-openai-api-key>
+OPENAI_MODEL=gpt-3.5-turbo-0125
+```
+
+### Start your Server-Side Agent
+
+```bash
+npm run dev
+```
+
+You should see the following output:
+
+```
+Server is running on port 8002
+Service key: <some-long-string>
+```
+
+Keep the service key handy, you will need it to talk to the server-side agent.
+
+## Talking to the Agent
+
+Once you have your server-side agent running, you can connect to it using the Palico Client. The Palico Client is a JavaScript library that provides a simple interface for interacting with the server-side agent. You can install it with the following command:
+
+```bash
+npm install @palico-ai/client-js
+```
+
+Using this client library, you can manage your conversations with the server-side agent. Here's an example of how you can use the client library to send a message to the server-side agent:
+
+```javascript
+import { createClient } from "@palico-ai/client-js";
+
+const client = createClient({ 
+  apiURL: "http://localhost:8002", 
+  serviceKey: "<your-service-key>"
+});
+
+const sendMessage = async (message) => {
+  const response = await client.newConversation(message);
+  return response;
+};
+```
+
+## Next Steps
+
+Checkout the following guides to learn more about creating use-case specific agents
+
+<NextStepsCTA
+  steps={[
+    {
+      title: "Create a Copilot Chatbot",
+      description: "Learn how to create a Copilot chatbot using the Palico Client.",
+      link: CREATE_COPILOT_GUIDE,
+    },
+    {
+      title: "Create a Translator",
+      description: "Learn how to create a Translator using the Palico Client.",
+      link: CREATE_TRANSLATOR_GUIDE,
+    },
+  ]}
+/>

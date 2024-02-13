@@ -1,0 +1,58 @@
+---
+sidebar_label: "Home"
+sidebar_position: 1
+slug: /
+---
+
+import { SimpleCard } from "@site/src/components/card/index.tsx";
+import { Grid } from "@mui/material";
+import { PRODUCT_ITEMS } from "@site/src/constants/intro.ts";
+import {
+  GETTING_STARTED_GUIDE,
+  CREATE_COPILOT_GUIDE,
+  CREATE_TRANSLATOR_GUIDE,
+} from "@site/src/constants/routes.ts";
+
+# Documentation
+
+## Getting Started
+
+<Grid container spacing={2}>
+  <Grid item md={12}>
+    <SimpleCard
+      title="Create a new Palico App"
+      description="Setup the core Palico App for your LLM Feature"
+      link={GETTING_STARTED_GUIDE}
+    />
+  </Grid>
+  <Grid item md={6}>
+    <SimpleCard
+      style={{ height: "100%" }}
+      title="Build a Copilot"
+      description="Build a copilot using Palico"
+      link={CREATE_COPILOT_GUIDE}
+    />
+  </Grid>
+  <Grid item md={6}>
+    <SimpleCard
+      style={{ height: "100%" }}
+      title="Getting Started with NextJS"
+      description="Get started by creating a new site or try Docusaurus immediately with docusaurus.new."
+      link={CREATE_TRANSLATOR_GUIDE}
+    />
+  </Grid>
+</Grid>
+
+## Components
+
+<Grid container spacing={1} rowSpacing={2}>
+  {PRODUCT_ITEMS.map((item, index) => (
+    <Grid item md={12} key={index}>
+      <SimpleCard
+        title={item.title}
+        description={item.description}
+        // link={item.link}
+      />
+    </Grid>
+  ))}
+</Grid>

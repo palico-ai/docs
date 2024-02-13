@@ -1,0 +1,97 @@
+---
+sidebar_label: Creating a Copilot Chatbot
+sidebar_position: 2
+---
+import NextStepsCTA from "@site/src/components/cta/next_steps.tsx";
+import {AUTHORIZE_USER_REQUEST_GUIDE, GETTING_STARTED_GUIDE } from "@site/src/constants/routes.ts";
+
+# Creating a Copilot (Chatbot) in React
+In this guide, we'll walk through how to create a Copilot using the Palico Client and React. This guide assumes you have already set up a server-side agent. If you haven't, please refer to the [Getting Started](./getting_started) guide.
+
+## Connecting Agent API to React App
+
+### Install Palico Client Dependencies
+From your React app, install the following package:
+```bash
+npm install @palico-ai/client-js @palico-ai/react
+```
+
+### Connect to Server-Side Agent
+#### Create a Context Provider
+Create a context provider that connects to your server-side agent.
+
+:::note
+Replace `<your-service-key>` with the service key you received when you started your server-side agent.
+:::
+
+```tsx
+import { PalicoContextProvider } from '@palico-ai/react'
+
+const proxyRequestHandler = createProxyAPIAgentRequestHandler(
+  "http://localhost:8002", 
+  "<your-service-key>"
+)
+
+type Props {
+  children: React.ReactNode
+}
+
+export const CopilotProvider: React.FC<Props> = ({ children }) => {
+  return (
+    <PalicoContextProvider requestHandler={proxyRequestHandler}>
+      {children}
+    </PalicoContextProvider>
+  )
+}
+```
+
+#### Wrap your App with the Context Provider
+Wrap the section of your app that you want to use the LLM agent with the context provider you created.
+
+```tsx
+<CopilotProvider>
+  {children}
+</CopilotProvider>
+```
+
+### Connect to your UI
+You can create your own UI to interact with the LLM agent, or use the `ChatWidget` component provided by the `@palico-ai/react` package. For quickly getting started, we'll use the ChatWidget component. The Copilot widget can anchor to any HTML element in your app. Here's an example of how you can use the ChatWidget component:
+
+```tsx
+const CopilotChatWidget: React.FC = () => {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <div>
+      <button
+        ref={setAnchorEl}
+        style={{
+          color: "#fff",
+        }}
+        onClick={handleClick}
+      >
+        Copilot
+      </button>
+      <ChatWidget headerTitle="Chatbot" anchorEl={anchorEl} open={open} onClose={handleClose} />
+    </div>
+  );
+};
+```
+
+## Next Steps
+<NextStepsCTA steps={[
+  {
+    title: "Authorizing User Requests",
+    description: "Learn how to authorize user requests to your server-side agent.",
+    link: AUTHORIZE_USER_REQUEST_GUIDE
+  }
+]} />
