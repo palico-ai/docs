@@ -13,6 +13,11 @@ import {
 
 # Getting Started
 
+## Requirements
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Node.js](https://nodejs.org/en/download/)
+
+
 ## Setup Server-Sided Agent
 
 ### Create a new Project
@@ -22,10 +27,10 @@ npx palico init <project-name>
 ```
 
 <details>
-<summary>Expected Directory Structure</summary>
+<summary>Understanding Directory Structure</summary>
 
 This will create a new directory with the name `<project-name>` and initialize a new Palico project for your.
-The project will have the following directory structure:
+The project will have a similar directory structure
 
 ```
 <project-name>
@@ -34,24 +39,27 @@ The project will have the following directory structure:
 |   ├── prompt_builder.ts
 |   |── toolset.ts
 ├── .gitignore
+├── .env
+├── Dockerfile
+├── docker-compose.yml
 ├── package.json
 ├── palico.json
 |── tsconfig.json
 └── README.md
 ```
 
+- `src/index.ts` - This is the entry point for your server-side agent. You can define the various components of your agent here, 
+such as your model config, how to generate prompts, what are the actions your agent can perform, etc.
+- `src/prompt_builder.ts` - This is where you define your prompt. You can use the `PromptBuilder` class to define your prompt.
+- `src/toolset.ts` - This is where you define the actions your agent can take. You can use the `Toolset` class to define your actions.
+- `palico.json` - This is a configuration file on how to build and run your server-side agent. This is used by palico cli tools to
+build, run, and deploy your server-side agent.
+
 </details>
-
-### Install NPM Dependencies
-
-```bash
-cd <project-name>
-npm install
-```
 
 ### Setting OpenAI Configuration
 
-Create a `.env` file in the root of your project and add the following:
+Open the `.env` file in the root of your project and update your OpenAI configs
 
 ```
 OPENAI_API_KEY=<your-openai-api-key>
@@ -61,13 +69,13 @@ OPENAI_MODEL=gpt-3.5-turbo-0125
 ### Start your Server-Side Agent
 
 ```bash
-npm run dev
+npm start
 ```
 
-You should see the following output:
+You should see a message like the following:
 
 ```
-Server is running on port 8002
+Server is running on port 8000
 Service key: <some-long-string>
 ```
 
@@ -75,7 +83,10 @@ Keep the service key handy, you will need it to talk to the server-side agent.
 
 ## Talking to the Agent
 
-Once you have your server-side agent running, you can connect to it using the Palico Client. The Palico Client is a JavaScript library that provides a simple interface for interacting with the server-side agent. You can install it with the following command:
+Once you have your server-side agent running, you can connect to it using the palico client library. 
+The client library is a JavaScript SDK that provides a simple interface for interacting with the 
+server-side agent. You can use this client library from your web application, 
+mobile app, or any other client-side application. You can install it with the following command:
 
 ```bash
 npm install @palico-ai/client-js
@@ -87,7 +98,7 @@ Using this client library, you can manage your conversations with the server-sid
 import { createClient } from "@palico-ai/client-js";
 
 const client = createClient({ 
-  apiURL: "http://localhost:8002", 
+  apiURL: "http://localhost:8000", 
   serviceKey: "<your-service-key>"
 });
 

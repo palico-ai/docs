@@ -20,14 +20,14 @@ import {
 <Grid container spacing={2}>
   <Grid item md={12}>
     <SimpleCard
-      title="Create a new Palico App"
-      description="Setup the core Palico App for your LLM Feature"
+      title="[Start Here] Create a new Palico App"
+      description="How to setup the core Palico App for your LLM Feature"
       link={GETTING_STARTED_GUIDE}
     />
   </Grid>
   <Grid item md={6}>
     <SimpleCard
-      style={{ height: "100%" }}
+      fullHeight
       title="Build a Copilot"
       description="Build a copilot using Palico"
       link={CREATE_COPILOT_GUIDE}
@@ -35,9 +35,9 @@ import {
   </Grid>
   <Grid item md={6}>
     <SimpleCard
-      style={{ height: "100%" }}
-      title="Getting Started with NextJS"
-      description="Get started by creating a new site or try Docusaurus immediately with docusaurus.new."
+      fullHeight
+      title="Create an LLM Translator"
+      description="Build a copilot using Palico"
       link={CREATE_TRANSLATOR_GUIDE}
     />
   </Grid>
@@ -45,10 +45,11 @@ import {
 
 ## Components
 
-<Grid container spacing={1} rowSpacing={2}>
+<Grid container spacing={2} rowSpacing={2}>
   {PRODUCT_ITEMS.map((item, index) => (
-    <Grid item md={12} key={index}>
+    <Grid item md={6} key={index}>
       <SimpleCard
+        fullHeight
         title={item.title}
         description={item.description}
         // link={item.link}

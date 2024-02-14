@@ -11,21 +11,10 @@ export const PRODUCT_ITEMS : SimpleCardProps[] = [
   },
   {
     title: "React Library",
-    description: "Helper library for React that connects to your Palico agent, handle sending messages to agent, running frontend tools, and provide other helpful utilities to run your agent in react"
-  }
-]
-
-export const GETTING_STARTED_ITEMS : SimpleCardProps[] = [
-  {
-    title: "Create a new Palico App",
-    description: "How to setup the core Palico App for your LLM Feature"
+    description: "Helper library for React that connect and send messaages to your Palico agent, running frontend tools, and provide other utilities for React development"
   },
   {
-    title: "Build a Copilot",
-    description: "Build a copilot using Palico"
-  },
-  {
-    title: "Create an LLM Translator",
-    description: "Build a copilot using Palico"
+    title: "Studio (UI) [Coming Soon]",
+    description: "A web-based UI for managing your your from managing user conversations, to running tests and evaluations."
   }
 ]

@@ -1,7 +1,7 @@
 import { ComponentWithChildren } from "@site/src/types";
 import Heading from "@theme/Heading";
 import { Box } from "@mui/material";
-import React from "react";
+import React, { CSSProperties } from "react";
 import { useColorMode } from "@docusaurus/theme-common";
 
 export interface CardProps extends ComponentWithChildren {
@@ -29,6 +29,7 @@ export const Card: React.FC<CardProps> = ({ children, style }) => {
 
 export type SimpleCardProps = {
   title: string;
+  fullHeight?: boolean;
   description?: string;
   link?: string;
   style?: React.CSSProperties;
@@ -38,10 +39,21 @@ export const SimpleCard: React.FC<SimpleCardProps> = ({
   title,
   description,
   link,
+  fullHeight,
   style
 }) => {
+  const fullHeightStyle : React.CSSProperties = fullHeight ? { 
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    // justifyContent: "space-between",
+   } : {};
+
   const card = (
-    <Card style={style}>
+    <Card style={{
+      ...fullHeightStyle,
+      ...style,
+    }}>
       <Heading as={"h4"}>{title}</Heading>
       {description && description}
     </Card>

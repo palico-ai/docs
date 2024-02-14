@@ -28,12 +28,7 @@ const NextStepsCTA: React.FC<NextStepCTAProps> = ({ steps }) => {
       {steps.map((step, index) => (
         <Grid item xs={12} md={mdSpacing} key={index}>
           <SimpleCard
-            style={{
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
+            fullHeight
             title={step.title}
             description={step.description}
             link={step.link}
