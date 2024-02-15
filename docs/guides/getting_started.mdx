@@ -59,7 +59,8 @@ build, run, and deploy your server-side agent.
 
 ### Setting OpenAI Configuration
 
-Open the `.env` file in the root of your project and update your OpenAI configs
+Open the `.env` file in the root of your project and update your OpenAI configs.
+You can get your OpenAI API key from the [OpenAI Dashboard](https://platform.openai.com/api-keys).
 
 ```
 OPENAI_API_KEY=<your-openai-api-key>
@@ -81,47 +82,22 @@ Service key: <some-long-string>
 
 Keep the service key handy, you will need it to talk to the server-side agent.
 
-## Talking to the Agent
-
-Once you have your server-side agent running, you can connect to it using the palico client library. 
-The client library is a JavaScript SDK that provides a simple interface for interacting with the 
-server-side agent. You can use this client library from your web application, 
-mobile app, or any other client-side application. You can install it with the following command:
-
-```bash
-npm install @palico-ai/client-js
-```
-
-Using this client library, you can manage your conversations with the server-side agent. Here's an example of how you can use the client library to send a message to the server-side agent:
-
-```javascript
-import { createClient } from "@palico-ai/client-js";
-
-const client = createClient({ 
-  apiURL: "http://localhost:8000", 
-  serviceKey: "<your-service-key>"
-});
-
-const sendMessage = async (message) => {
-  const response = await client.newConversation(message);
-  return response;
-};
-```
 
 ## Next Steps
 
-Checkout the following guides to learn more about creating use-case specific agents
+That's all you need to setup your server-side agent. Next, checkout the following guides to 
+create use-case specific agents for your frontend.
 
 <NextStepsCTA
   steps={[
     {
       title: "Create a Copilot Chatbot",
-      description: "Learn how to create a Copilot chatbot using the Palico Client.",
+      description: "Learn how to create a copilot chatbot that can take actions on frontend on behalf of the user.",
       link: CREATE_COPILOT_GUIDE,
     },
     {
       title: "Create a Translator",
-      description: "Learn how to create a Translator using the Palico Client.",
+      description: "Learn how you can create features like translation, summarization, generation, etc.",
       link: CREATE_TRANSLATOR_GUIDE,
     },
   ]}

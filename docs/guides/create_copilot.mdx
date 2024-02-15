@@ -44,31 +44,38 @@ Replace `<your-service-key>` with the service key you received when you started 
 :::
 
 ```tsx title="[React]/context/copilot_provider.tsx"
-import { PalicoContextProvider } from '@palico-ai/react'
+import { createProxyAPIAgentRequestHandler } from "@palico-ai/client-js";
+import { PalicoContextProvider } from "@palico-ai/react";
 
 const proxyRequestHandler = createProxyAPIAgentRequestHandler(
   "http://localhost:8000",
-  // highlight-next-line
   "<your-service-key>"
-)
+);
 
-type Props {
-  children: React.ReactNode
-}
+type Props = {
+  children: React.ReactNode;
+};
 
 export const CopilotProvider: React.FC<Props> = ({ children }) => {
   return (
-    // highlight-start
-    <PalicoContextProvider requestHandler={proxyRequestHandler}>
+    <PalicoContextProvider requestHandler={proxyRequestHandler} tools={{}}>
       {children}
     </PalicoContextProvider>
-    // highlight-end
-  )
-}
+  );
+};
 ```
+If you are using the example above, remember to wrap your app with the `CopilotProvider` component.
 
 ```tsx title="[React]/app.tsx"
-<CopilotProvider>{children}</CopilotProvider>
+import { CopilotProvider } from "./context/copilot_provider";
+
+const App: React.FC = () => {
+  return (
+    <CopilotProvider>
+      {/* your existing code */}
+    </CopilotProvider>
+  );
+};
 ```
 
 ### Creating a Chat UI
@@ -80,13 +87,18 @@ component. Below are examples of how to use the ChatWidget component and how to 
 
 <Tabs>
   <TabItem label="Built-in Chat Widget" value="chatwidget" default>
+    The following example shows you can can create a button that opens the `ChatWidget` component
+    when clicked.
     ```tsx title="[React]/component/copilot_button.tsx"
-    const CopilotButton: React.FC = () => {
-      // highlight-next-line
-      const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
-      const [open, setOpen] = React.useState(false);
+    import { Button } from "@mui/material";
+    import { ChatWidget } from "@palico-ai/react";
+    import { useState } from "react";
 
-      const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const CopilotButton: React.FC = () => {
+      const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+      const [open, setOpen] = useState(false);
+
+      const handleClick = () => {
         setOpen(true);
       };
 
@@ -96,21 +108,42 @@ component. Below are examples of how to use the ChatWidget component and how to 
 
       return (
         <div>
-          <button
-            // highlight-next-line
+          <Button
+            variant="contained"
+            sx={{
+              position: "fixed",
+              bottom: 16,
+              right: 16,
+            }}
             ref={setAnchorEl}
             onClick={handleClick}
           >
             Copilot
-          </button>
-          // highlight-start
+          </Button>
           <ChatWidget
+            width="400px"
+            height="600px"
             headerTitle="Chatbot"
             anchorEl={anchorEl}
             open={open}
             onClose={handleClose}
           />
-          // highlight-end
+        </div>
+      );
+    };
+
+    export default CopilotButton;
+    ```
+    Then you can add the `CopilotButton` component to your app.
+    ```tsx title="[React]/app.tsx"
+    import CopilotButton from "./component/copilot_button";
+
+    const App: React.FC = () => {
+      return (
+        <div>
+          {/* your existing code */}
+          // highlight-next-line
+          <CopilotButton />
         </div>
       );
     };
@@ -144,11 +177,19 @@ component. Below are examples of how to use the ChatWidget component and how to 
   </TabItem>
 </Tabs>
 
+---
+
+### Testing
+
+You should now have a working Chatbot UI that connects to your Server-sided Agent. Test your chatbot by
+sending some messages and see how it responds.
+
 ## Adding Tools to your Copilot
 
 The power of a copilot is that it can understand the users intent and take actions on behalf of the user. Tools
-are the actions that the copilot can take. For Palico, tools are defined in the server-side agent and
-implemented in the client-side app. Here's how you can add tools to your copilot.
+are the actions that the copilot can take, such as running a function on the frontend. For Palico, tools 
+are defined in the server-side agent and implemented in the client-side app. 
+Here's how you can add tools to your copilot.
 
 ### Add tool definitions
 
@@ -282,9 +323,10 @@ export class AppPromptBuilder implements PromptBuilder {
 ```
 
 ## Trial and Error
-Getting the right prompt can be a trial and error process. 
-You might need to experiment with different prompts to get the best results. 
-It's recommend finding a systematic way to test and improve your prompts. 
+
+Getting the right prompt can be a trial and error process.
+You might need to experiment with different prompts to get the best results.
+It's recommend finding a systematic way to test and improve your prompts.
 We will provide more guidance on this in the future.
 
 ## Next Steps
