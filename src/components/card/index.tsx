@@ -1,7 +1,7 @@
 import { ComponentWithChildren } from "@site/src/types";
 import Heading from "@theme/Heading";
 import { Box } from "@mui/material";
-import React, { CSSProperties } from "react";
+import React from "react";
 import { useColorMode } from "@docusaurus/theme-common";
 
 export interface CardProps extends ComponentWithChildren {
@@ -10,8 +10,9 @@ export interface CardProps extends ComponentWithChildren {
 
 export const Card: React.FC<CardProps> = ({ children, style }) => {
   const { colorMode } = useColorMode();
+  console.log("colorMode", colorMode);
   const bgColor = { light: "#fff", dark: "#2f2f2f" };
-
+  
   return (
     <Box
       sx={{
