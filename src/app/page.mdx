@@ -1,5 +1,3 @@
-import { HeroPattern } from '@/components/HeroPattern'
-
 # Quickstart
 
 Get started with a Palico app in your local development environment in just a few steps.
@@ -9,7 +7,10 @@ Get started with a Palico app in your local development environment in just a fe
 - [Docker](https://hub.docker.com/)
 - [NodeJS](https://nodejs.org/en)
 
-## Create a Palico App
+## Setup and Installation
+Setup a Palico app with the following steps
+
+### Initialize an App
 
 Create a palico app by running the following command:
 
@@ -20,7 +21,7 @@ npx palico init <project-name>
 This will create a basic Palico app with a single conversational LLM application.
 This starter LLM application uses OpenAI so you will need to provide your OpenAI API key in the `.env` file.
 
-## Add your OpenAI API Key
+### Add your OpenAI API Key
 
 Add your OpenAI API key to the `.env` file in the root of your project. You can get your OpenAI API key from https://platform.openai.com/api-keys.
 
@@ -28,7 +29,7 @@ Add your OpenAI API key to the `.env` file in the root of your project. You can 
 OPENAI_API_KEY=<your-openai-api-key>
 ```
 
-## Bootstrap your Services
+### Bootstrap your Services
 
 Your Palico app has additional services associated with it, such as a database and tracing service. To bootstrap these services, run the following command:
 
@@ -38,7 +39,7 @@ npm run palico bootstrap
 
 You will only need to run this command once when you first setup your code repository, or when you update the version of your `@palico-ai/app` package.
 
-## Start your Palico App
+### Start your Palico App
 
 To start your Palico app, run the following command:
 

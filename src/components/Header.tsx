@@ -4,7 +4,6 @@ import clsx from 'clsx'
 import { motion, useScroll, useTransform } from 'framer-motion'
 
 import { Button } from '@/components/Button'
-import { Logo } from '@/components/Logo'
 import {
   MobileNavigation,
   useIsInsideMobileNavigation,
@@ -12,6 +11,8 @@ import {
 import { useMobileNavigationStore } from '@/components/MobileNavigation'
 import { MobileSearch, Search } from '@/components/Search'
 import { ThemeToggle } from '@/components/ThemeToggle'
+import Image from 'next/image'
+import Logo from '@/images/logos/palico.png'
 
 function TopLevelNavItem({
   href,
@@ -23,6 +24,7 @@ function TopLevelNavItem({
   return (
     <li>
       <Link
+        target="_blank"
         href={href}
         className="text-sm leading-5 text-zinc-600 transition hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
       >
@@ -74,15 +76,16 @@ export const Header = forwardRef<
       <div className="flex items-center gap-5 lg:hidden">
         <MobileNavigation />
         <Link href="/" aria-label="Home">
-          <Logo className="h-6" />
+          <Image src={Logo} alt="Logo" width={32} height={32} />
         </Link>
       </div>
       <div className="flex items-center gap-5">
         <nav className="hidden md:block">
           <ul role="list" className="flex items-center gap-8">
-            <TopLevelNavItem href="/">API</TopLevelNavItem>
-            <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-            <TopLevelNavItem href="#">Support</TopLevelNavItem>
+            <TopLevelNavItem href="https://palico.ai">Website</TopLevelNavItem>
+            <TopLevelNavItem href="https://github.com/palico-ai/palico-main">
+              Github
+            </TopLevelNavItem>
           </ul>
         </nav>
         <div className="hidden md:block md:h-5 md:w-px md:bg-zinc-900/10 md:dark:bg-white/15" />
@@ -90,9 +93,9 @@ export const Header = forwardRef<
           <MobileSearch />
           <ThemeToggle />
         </div>
-        <div className="hidden min-[416px]:contents">
+        {/* <div className="hidden min-[416px]:contents">
           <Button href="#">Sign in</Button>
-        </div>
+        </div> */}
       </div>
     </motion.div>
   )

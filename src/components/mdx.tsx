@@ -5,7 +5,20 @@ import { Feedback } from '@/components/Feedback'
 import { Heading } from '@/components/Heading'
 import { Prose } from '@/components/Prose'
 
-export const a = Link
+export const a = function A(props: React.ComponentPropsWithoutRef<'a'>) {
+  if (!props.href) {
+    throw new Error('All links must have an href')
+  }
+  const { href, target, ...rest } = props
+  const isExternal = href.startsWith('http')
+  return (
+    <Link
+      href={href}
+      target={target || isExternal ? '_blank' : undefined}
+      {...rest}
+    />
+  )
+}
 export { Button } from '@/components/Button'
 export { CodeGroup, Code as code, Pre as pre } from '@/components/Code'
 
@@ -44,8 +57,8 @@ function InfoIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
 
 export function Note({ children }: { children: React.ReactNode }) {
   return (
-    <div className="my-6 flex gap-2.5 rounded-2xl border border-emerald-500/20 bg-emerald-50/50 p-4 leading-6 text-emerald-900 dark:border-emerald-500/30 dark:bg-emerald-500/5 dark:text-emerald-200 dark:[--tw-prose-links-hover:theme(colors.emerald.300)] dark:[--tw-prose-links:theme(colors.white)]">
-      <InfoIcon className="mt-1 h-4 w-4 flex-none fill-emerald-500 stroke-white dark:fill-emerald-200/20 dark:stroke-emerald-200" />
+    <div className="my-6 flex gap-2.5 rounded-2xl border border-purple-500/20 bg-purple-50/50 p-4 leading-6 text-purple-900 dark:border-purple-500/30 dark:bg-purple-500/5 dark:text-purple-200 dark:[--tw-prose-links-hover:theme(colors.purple.300)] dark:[--tw-prose-links:theme(colors.white)]">
+      <InfoIcon className="mt-1 h-4 w-4 flex-none fill-purple-500 stroke-white dark:fill-purple-200/20 dark:stroke-purple-200" />
       <div className="[&>:first-child]:mt-0 [&>:last-child]:mb-0">
         {children}
       </div>

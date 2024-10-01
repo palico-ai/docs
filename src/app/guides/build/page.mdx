@@ -1,10 +1,10 @@
 # Build You Application
 Palico gives you complete control over the implementation details of your application. In this guide, we go through the building-blocks that are provided to you for building your application.
 
-## Building a simple LLM Application
+## Defining your Application
 You can build an LLM application by creating a new folder within the `src/agents` directory and creating an `index.ts` file within it. This file should export a class that implements the `Agent` interface.
 
-```typescript title="src/agents/my_agent/index.ts"
+```typescript {{title: "src/agents/my_agent/index.ts"}}
 import {
   Agent,
   AgentResponse,
@@ -17,7 +17,6 @@ class MyLLMApp implements Agent {
     content: ConversationRequestContent,
     context: ConversationContext
   ): Promise<AgentResponse> {
-    // highlight-start
     // Your LLM application logic
     // 1. Pre-processing
     // 2. Build your prompt
@@ -26,7 +25,6 @@ class MyLLMApp implements Agent {
     return {
       // 5. Return a response to caller
     }
-      // highlight-end
   }
 }
 ```
@@ -35,7 +33,7 @@ Agents are an encapsulation of your LLM application. Agents are generally your p
 
 Learn more about `Agent` from it's [API Definition](https://palico-ai.github.io/palico-ai/interfaces/_palico_ai_app.Agent.html).
 
-## The `chat()` method
+## The `chat()` Method
 The `Agent` interface only has the `chat()` method. This method is called when a user sends a message to your agent. The method takes in two parameters:
 - `content`: Contains the user message and any other data passed by the caller
 - `context`: Contains various context information such as the conversation ID, feature flags, trace ID, and more
@@ -64,11 +62,11 @@ export interface ConversationContext {
 - `isNewConversation`: A boolean indicating if this is the first message in the conversation.
 - `appConfig`: A dictionary of "feature flags" that can be used to control the behavior of your agent. This is where you define various independent variables for your experiments.
 
-## Building a Conversational Application
+## Chat Memory
 For conversational applications, like chatbots, you need ways to keep track of conversation states such that you can maintain context across multiple message requests. To help you group multiple messages together, the chat method contains the `conversationId` property which acts as a unique identifier for requests that belong to the same conversation. Palico also provides a `ChatHistoryStore` class that you can use to store and retrieve conversation states. These conversation states are stored in a SQL database.
 
 ### Example Application
-```typescript title="src/agents/chatbot_agent/index.ts"
+```typescript {{title: "src/agents/chatbot_agent/index.ts"}}
 import {
   ConversationContext,
   ConversationRequestContent,
@@ -87,20 +85,17 @@ export default class ChatbotAgent implements Agent {
     const { userMessage } = content;
     if (!userMessage) throw new Error("User message is required");
     const { conversationId, isNewConversation } = context;
-    // highlight-next-line
     // 1. Create a new ChatHistoryStore object
     const historyStore = await ChatHistoryStore
       .fromConversation<ChatCompletionMessageParam>({
           conversationId,
           isNewConversation,
       });
-    // highlight-next-line
     // 2. Append the user message to the history store
     historyStore.append({
       role: "user",
       content: userMessage,
     });
-    // highlight-next-line
     // 3. Call the OpenAI API
     const openaiResponse = await this.openai.chat.completions.create({
       model: "gpt-3.5-turbo-0125",
@@ -110,13 +105,11 @@ export default class ChatbotAgent implements Agent {
     if (!responseMessage) {
       throw new Error("Invalid response from OpenAI");
     }
-    // highlight-next-line
     // 4. Append the response message to the history store
     historyStore.append({
       role: "assistant",
       content: responseMessage,
     });
-    // highlight-next-line
     // 5. Save the history store
     await historyStore.save();
     return {
@@ -136,7 +129,3 @@ export default class ChatbotAgent implements Agent {
 }
 ```
 Learn more from the `ChatHistoryStore` class [API Definition](https://palico-ai.github.io/palico-ai/classes/_palico_ai_app.ChatHistoryStore.html).
-
-## Next Steps
-- [Preview Your Application in Palico Studio](./02_preview_changes.md)
-- [Connect to your Agent from External Services with ClientSDK](./10_client_sdk.md)

@@ -11,46 +11,9 @@ import { useIsInsideMobileNavigation } from '@/components/MobileNavigation'
 import { useSectionStore } from '@/components/SectionProvider'
 import { Tag } from '@/components/Tag'
 import { remToPx } from '@/lib/remToPx'
+import { NavGroup, SIDEBAR_NAVIGATION } from '@/routes'
 
-export const navigation: Array<NavGroup> = [
-  {
-    title: 'Getting Started',
-    links: [
-      { title: 'Quickstart', href: '/' },
-      { title: 'Components', href: '/components' },
-    ],
-  },
-  {
-    title: 'Guides',
-    links: [
-      { title: 'Build Your Application', href: '/guides/build' },
-      { title: 'Preview Your Changes', href: '/quickstart' },
-      { title: 'Hot-swap Components', href: '/sdks' },
-      { title: 'AI Gateway', href: '/authentication' },
-      { title: 'Prompt Management', href: '/pagination' },
-      { title: 'Logging And Tracing', href: '/errors' },
-      { title: 'Experiments', href: '/webhooks' },
-      { title: 'Client SDK', href: '/rest-api' },
-    ],
-  },
-  {
-    title: 'Integrations',
-    links: [
-      { title: 'LangChain', href: '/contacts' },
-      { title: 'LlamaIndex', href: '/conversations' },
-      { title: 'Model Providers', href: '/messages' },
-      { title: 'Vector Databases', href: '/attachments' },
-    ],
-  },
-]
-
-interface NavGroup {
-  title: string
-  links: Array<{
-    title: string
-    href: string
-  }>
-}
+export const navigation = SIDEBAR_NAVIGATION
 
 function useInitialValue<T>(value: T, condition = true) {
   let initialValue = useRef(value).current
@@ -168,7 +131,7 @@ function ActivePageMarker({
   return (
     <motion.div
       layout
-      className="absolute left-2 h-6 w-px bg-emerald-500"
+      className="absolute left-2 h-6 w-px bg-purple-500"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0 }}
@@ -265,9 +228,9 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
   return (
     <nav {...props}>
       <ul role="list">
-        <TopLevelNavItem href="/">API</TopLevelNavItem>
-        <TopLevelNavItem href="#">Documentation</TopLevelNavItem>
-        <TopLevelNavItem href="#">Support</TopLevelNavItem>
+        {/* <TopLevelNavItem href="/">API</TopLevelNavItem> */}
+        {/* <TopLevelNavItem href="#">Documentation</TopLevelNavItem> */}
+        {/* <TopLevelNavItem href="#">Support</TopLevelNavItem> */}
         {navigation.map((group, groupIndex) => (
           <NavigationGroup
             key={group.title}
@@ -275,11 +238,11 @@ export function Navigation(props: React.ComponentPropsWithoutRef<'nav'>) {
             className={groupIndex === 0 ? 'md:mt-0' : ''}
           />
         ))}
-        <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
+        {/* <li className="sticky bottom-0 z-10 mt-6 min-[416px]:hidden">
           <Button href="#" variant="filled" className="w-full">
             Sign in
           </Button>
-        </li>
+        </li> */}
       </ul>
     </nav>
   )
