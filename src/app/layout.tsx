@@ -4,6 +4,7 @@ import glob from 'fast-glob'
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
 import { type Section } from '@/components/SectionProvider'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 
 import '@/styles/tailwind.css'
 import { HeroPattern } from '@/components/HeroPattern'
@@ -32,6 +33,8 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="flex min-h-full bg-white antialiased dark:bg-zinc-900">
+        <GoogleTagManager gtmId="GTM-5C2WKP72" />
+        <GoogleAnalytics gaId="G-Q39NFM4PTV" />
         <Providers>
           <div className="w-full">
             <Layout allSections={allSections}>
