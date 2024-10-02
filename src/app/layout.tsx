@@ -11,7 +11,7 @@ import { HeroPattern } from '@/components/HeroPattern'
 
 export const metadata: Metadata = {
   title: {
-    template: 'Palico AI - %s',
+    template: 'Palico AI | %s',
     default: 'Palico AI | Docs',
   },
 }
