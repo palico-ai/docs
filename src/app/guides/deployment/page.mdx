@@ -1,0 +1,72 @@
+export const metadata = {
+  title: 'Deployment',
+  description: 'Deploy your Palico app to production with Docker',
+}
+
+# Deployment
+
+Docker is the easiest way to get started with self-hosted Palico.
+
+## Quickstart
+
+In this section, we'll make your codebase docker-ready and run it locally with docker-compose.
+
+### Step 1: Generate Selfhosting Files
+
+From the root of your application, run the following command:
+
+```bash
+npm run selfhost:init
+```
+
+This will add a docker folder to your project with the following files:
+
+```
+selfhost/
+  Dockerfile
+  docker-compose.yml
+  template.env
+```
+
+<Note>
+We only need to run this command once. You should commit these files to your repository at this point.
+```
+git add .
+git commit -m "Initialized Self-Hosted Docker Setup"
+```
+</Note>
+
+### Step 2: Create `.env` file
+```bash
+cp selfhost/template.env selfhost/.env
+```
+You should now have a `.env` file in your `selfhost` directory. You should modify this file with appropriate values when deploying to production. Read more in the Setting your env file [section](#setting-up-your-env-file).
+
+### Step 3: Make sure Docker Images are up-to-date
+```bash
+npm run selfhost:update
+```
+You should always run this command before deploying your application to production. This will ensure that your Docker images are up-to-date.
+
+### Step 4: Start your Docker Container
+```bash
+npm run selfhost:up -- -d
+```
+This will start your Docker container in the background. You can access Palico Studio `http://localhost:3000`.
+
+### Step 5: Make sure your Database is up-to-date
+```bash
+npm run palico selfhost migrate-db -- --user root --password root
+```
+
+You should always run this command before deploying your application to production. This will ensure that your database is up-to-date.
+
+
+## Setting up your `.env` file
+It's essential to update the following values in your `.env` file before deploying to production:
+```bash
+DOCKER_COMPOSE_JWT_SECRET
+DOCKER_COMPOSE_SERVICE_KEY
+DOCKER_COMPOSE_STUDIO_USERNAME
+DOCKER_COMPOSE_STUDIO_PASSWORD
+```

@@ -17,6 +17,7 @@ export enum AppRoute {
   Telemetry = '/guides/telemetry',
   Experiments = '/guides/experiments',
   ClientSdk = '/guides/client_sdk',
+  Deployment = '/guides/deployment',
   Langchain = '/integrations/langchain',
   LlamaIndex = '/integrations/llamaindex',
   LlmProviders = '/integrations/llm_providers',
@@ -51,6 +52,7 @@ export const SIDEBAR_NAVIGATION: Array<NavGroup> = [
       { title: 'Logging And Tracing', href: AppRoute.Telemetry },
       { title: 'Experiments', href: AppRoute.Experiments },
       { title: 'Client SDK', href: AppRoute.ClientSdk },
+      { title: 'Deployment', href: AppRoute.Deployment },
     ],
   },
   {
